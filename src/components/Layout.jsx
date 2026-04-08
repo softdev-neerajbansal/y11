@@ -14,7 +14,7 @@ function Layout() {
       <header className="site-header">
         <div className="site-header__brand">
           <p className="eyebrow">Azure Crest Retreat</p>
-          <h1 className="brand brand--small">Neeraj Bansal</h1>
+          <h1 className="brand brand--small">Abhisheek Sharma</h1>
         </div>
         <nav className="nav-links">
           {navItems.map((item) => (
