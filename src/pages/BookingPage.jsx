@@ -6,10 +6,10 @@ function BookingPage() {
     <main className="page-content">
       <section className="page-hero">
         <p className="eyebrow">Booking</p>
-        <h2>Book now and pay at the hotel</h2>
+        <h2>Book with online payment or pay at the hotel</h2>
         <p>
-          Send your reservation request online, then complete payment during check-in at
-          the property.
+          Choose UPI, card, netbanking, wallet, or keep your reservation flexible with
+          payment during check-in at the property.
         </p>
       </section>
       <section className="section section--tight booking-page-layout">
@@ -23,6 +23,7 @@ function BookingPage() {
             with the front desk, and finalize everything with our team before arrival.
           </p>
           <ul className="feature-list">
+            <li>UPI, card, wallet, and netbanking checkout design</li>
             <li>Flexible direct booking support</li>
             <li>Pay at Hotel for all listed room types</li>
             <li>Group stays and event guests can request custom pricing</li>

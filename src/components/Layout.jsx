@@ -11,12 +11,18 @@ const navItems = [
 function Layout() {
   return (
     <>
+      <a className="skip-link" href="#main-content">
+        Skip to content
+      </a>
       <header className="site-header">
-        <div className="site-header__brand">
-          <p className="eyebrow">Azure Crest Retreat</p>
-          <h1 className="brand brand--small">Abhisheek Sharma</h1>
-        </div>
-        <nav className="nav-links">
+        <NavLink to="/" className="site-header__brand" aria-label="Azure Crest Retreat home">
+          <span className="brand-mark">AC</span>
+          <span className="brand-lockup">
+            <span className="eyebrow">Azure Crest Retreat</span>
+            <span className="brand brand--small">Neeraj Sharma</span>
+          </span>
+        </NavLink>
+        <nav className="nav-links" aria-label="Primary navigation">
           {navItems.map((item) => (
             <NavLink
               key={item.to}
@@ -31,13 +37,21 @@ function Layout() {
           ))}
         </nav>
         <NavLink to="/booking" className="header-cta">
-          Reserve now
+          Book stay
         </NavLink>
       </header>
-      <Outlet />
+      <div id="main-content">
+        <Outlet />
+      </div>
       <footer className="footer">
-        <p>Azure Crest Retreat</p>
-        <p>Flexible room booking with pay at hotel, premium rooms, and full guest support.</p>
+        <div className="footer__brand">
+          <span className="brand-mark brand-mark--footer">AC</span>
+          <div>
+            <p>Azure Crest Retreat</p>
+            <span>Premium rooms, flexible booking, and full guest support.</span>
+          </div>
+        </div>
+        <p>Pay online or pay at hotel with direct reservation assistance.</p>
       </footer>
     </>
   )

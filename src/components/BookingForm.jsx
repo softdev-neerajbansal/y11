@@ -1,24 +1,58 @@
 import { useState } from 'react'
+import PaymentGateway from './PaymentGateway'
 import { rooms } from '../data/hotelData'
+import { formatCurrency, getBookingPricing } from '../utils/pricing'
 
 const initialBooking = {
   checkIn: '',
   checkOut: '',
   guests: '2 Guests',
   room: rooms[0].name,
+  paymentMode: 'payOnline',
+  gateway: 'upi',
+  upiId: '',
+  cardName: '',
+  cardNumber: '',
+  cardExpiry: '',
+  cardCvv: '',
+  bank: 'HDFC Bank',
+  walletMobile: '',
+}
+
+const gatewayLabels = {
+  upi: 'UPI',
+  card: 'card',
+  netbanking: 'netbanking',
+  wallet: 'wallet',
 }
 
 function BookingForm({ compact = false }) {
   const [bookingForm, setBookingForm] = useState(initialBooking)
   const [bookingMessage, setBookingMessage] = useState('')
+  const selectedRoom = rooms.find((room) => room.name === bookingForm.room) ?? rooms[0]
+  const pricing = getBookingPricing(selectedRoom, bookingForm.checkIn, bookingForm.checkOut)
 
   function handleBookingChange(event) {
     const { name, value } = event.target
+    updateBookingField(name, value)
+  }
+
+  function updateBookingField(name, value) {
     setBookingForm((current) => ({ ...current, [name]: value }))
   }
 
   function handleBookingSubmit(event) {
     event.preventDefault()
+
+    if (!compact && bookingForm.paymentMode === 'payOnline') {
+      setBookingMessage(
+        `Payment session ready for ${bookingForm.room}. Total ${formatCurrency(
+          pricing.total,
+        )} will continue through ${gatewayLabels[bookingForm.gateway]}.`,
+      )
+      return
+    }
+
     setBookingMessage(
       `Reservation request sent for ${bookingForm.room}. You can pay at the hotel during check-in.`,
     )
@@ -27,7 +61,7 @@ function BookingForm({ compact = false }) {
   return (
     <aside className={compact ? 'booking-card booking-card--compact' : 'booking-card'}>
       <p className="card-kicker">Quick booking</p>
-      <h3>Reserve now, pay at hotel</h3>
+      <h3>{compact ? 'Reserve now, pay at hotel' : 'Reserve with secure checkout'}</h3>
       <form onSubmit={handleBookingSubmit}>
         <label>
           Check in
@@ -66,12 +100,20 @@ function BookingForm({ compact = false }) {
             ))}
           </select>
         </label>
+        {!compact && (
+          <PaymentGateway
+            booking={bookingForm}
+            pricing={pricing}
+            onFieldChange={updateBookingField}
+          />
+        )}
         <button type="submit" className="primary-button full-width">
-          Confirm booking request
+          {compact ? 'Confirm booking request' : 'Continue checkout'}
         </button>
         <p className="fine-print">
-          No advance payment required. Our reservation team confirms availability and
-          you pay during check-in.
+          {compact
+            ? 'No advance payment required. Our reservation team confirms availability and you pay during check-in.'
+            : 'Online payment creates a secure checkout session. Pay-at-hotel bookings stay flexible until check-in.'}
         </p>
         {bookingMessage && <p className="success-message">{bookingMessage}</p>}
       </form>

@@ -1,10 +1,12 @@
 :root {
-  font-family: 'Avenir Next', 'Segoe UI', 'Helvetica Neue', sans-serif;
+  font-family:
+    Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+    sans-serif;
   line-height: 1.5;
   font-weight: 400;
-  color: #f5f8fb;
+  color: #f8f4ec;
   background:
-    radial-gradient(circle at top, #132033 0%, #0b1422 45%, #070c14 100%);
+    linear-gradient(135deg, #101312 0%, #18221f 42%, #241821 72%, #121211 100%);
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -18,6 +20,10 @@ html {
 body {
   margin: 0;
   min-width: 320px;
+  min-height: 100vh;
+  background:
+    linear-gradient(180deg, rgba(245, 201, 111, 0.08), transparent 34%),
+    linear-gradient(135deg, #101312 0%, #18221f 42%, #241821 72%, #121211 100%);
 }
 
 body,
@@ -34,4 +40,10 @@ a {
 
 * {
   box-sizing: border-box;
+  letter-spacing: 0;
+}
+
+::selection {
+  color: #151817;
+  background: #f0c46a;
 }
